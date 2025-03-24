@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="/museum/webvr/components/aframe.min.js"></script>
+    <script src="/museum/webvr/components/aframe-extras.min.js"></script>
+
+    <script src="/museum/webvr/components/excursion.js"></script>
+    <script src="/museum/webvr/components/camera-look.js"></script>
+    <script src="/museum/webvr/components/aframe-dialog-popup-component.js"></script>
+    <script
+      type="text/javascript"
+      src="/museum/webvr/data/exdata.json"
+    ></script>
+  </head>
+
+  <body style="background-color: #000">
+    <a-scene>
+      <a-assets>
+        <a-asset-item
+          id="modelex"
+          src="/museum/webvr/images/models/DNA.gltf"
+        ></a-asset-item>
+
+        <img
+          id="modelOpenButton"
+          src="/museum/webvr/images/excursionstuff/modelOpenButton.png"
+        />
+        <img
+          id="infoClose"
+          src="/museum/webvr/images/excursionstuff/close1.png"
+        />
+        <img id="info" src="/museum/webvr/images/excursionstuff/info.jpg" />
+        <img id="transb" src="/museum/webvr/images/excursionstuff/empt.jpg" />
+        <img id="backb" src="/museum/webvr/images/excursionstuff/back6.png" />
+      </a-assets>
+
+      <a-entity camera look-controls>
+        <a-entity id="loader" visible="true" position="0 1.8 -0.5">
+          <a-entity
+            geometry="primitive: sphere; radius: 0.02"
+            position="0.05 0 0"
+            material="color: white;"
+            animation__scale="property: scale; dir: alternate; dur: 800; easing: easeInOutSine; loop: true; from: 0 0 0; to: 1 1 1"
+          >
+          </a-entity>
+          <a-entity
+            geometry="primitive: sphere; radius: 0.02"
+            position="-0.05 0 0"
+            material="color: white;"
+            animation__scale="property: scale; dir: alternate; dur: 900; easing: easeInOutSine; loop: true; from: 0 0 0; to: 1 1 1"
+          >
+          </a-entity>
+          <a-entity
+            geometry="primitive: sphere; radius: 0.02"
+            position="0 0 0"
+            material="color: white;"
+            animation__scale="property: scale; dir: alternate; dur: 1000; easing: easeInOutSine; loop: true; from: 0 0 0; to: 1 1 1"
+          >
+          </a-entity>
+          <a-entity
+            position="0 0.05 0"
+            text="value: Загрузка; font: fonts/Stem-Regular-msdf.json; negate: false; color: #81eaf0; wrapCount: 60; align: center; alphaTest: 0.8"
+          >
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+      <a-entity
+        excursion="target:#esphere;  edata:exdata; empty : #transb; infoOpen : #info; infoClose : #infoClose; modelOpenButton: #modelOpenButton; font: fonts/YaHeiCustom-msdf.json; linkp:#linkParent; backb:#backb; button:#button"
+      >
+        <a-entity camera look-controls>
+          <a-entity
+            id="button"
+            position="0 0.5 -3"
+            rotation="30 0 0"
+          ></a-entity>
+        </a-entity>
+        <a-sky
+          setup-fade="target:#esphere"
+          color="#9990"
+          id="esphere"
+          radius="100"
+          rotation="0 0 0"
+        ></a-sky>
+        <a-entity id="linkParent"></a-entity>
+      </a-entity>
+
+      <a-entity
+        id="cameraRig"
+        movement-controls="constrainToNavMesh: true; enabled: true"
+      >
+        <a-entity
+          id="cursor"
+          camera
+          look-controls
+          position="0 1.8 0"
+          cursor="rayOrigin: mouse"
+          raycaster="objects: .interractible"
+        ></a-entity>
+        <a-entity
+          id="leftHand"
+          hand-controls="hand: left; handModelStyle: highPoly; color: #94c6ff"
+        ></a-entity>
+        <a-entity
+          id="rightHand"
+          hand-controls="hand: right; handModelStyle: highPoly; color: #94c6ff"
+          laser-controls
+          line="color: red; opacity: 0.75"
+          raycaster="objects: .interractible"
+        ></a-entity>
+      </a-entity>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          var isMobile = /Mobi|Android/i.test(navigator.userAgent);
+          var movementControls = document.querySelector("#cameraRig");
+
+          if (isMobile) {
+            movementControls.setAttribute(
+              "movement-controls",
+              "enabled",
+              "false"
+            );
+          } else {
+            movementControls.setAttribute(
+              "movement-controls",
+              "enabled",
+              "true"
+            );
+          }
+        });
+      </script>
+    </a-scene>
+  </body>
+</html>

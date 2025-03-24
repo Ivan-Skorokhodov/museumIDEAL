@@ -1,0 +1,188 @@
+[
+    {
+        "id":1,
+        "url":"/museum/webvr/images/ex360/point1.jpg",
+        "rotation": 180,
+        "transitions":[
+            {"transitionId": 2, "additionalRotation": 0, "latitude":0, "longitude":310, "radius": 18 },
+            {"transitionId": 12, "additionalRotation": 0, "latitude":0, "longitude":135, "radius": 18 }
+            ],
+        "model":[
+            {"id": "model", "url": "#modelex", "scale": "3 3 3", "rotation": "0 0 0", "latitude": 0, "longitude":45, "radius": 10 }
+            ],
+        "info":[
+            {"id":"inf-1", "title":"        ", "text": "Состояние постоянного приспособления,постоянной эволюции есть естественное состояние жизнеспособной технической школы, чутко относящейся к запросам жизни... строй высшей технической школы не может вылиться в совершенно опреде - ленные и строго разграниченные рамки административного произвола\n из решения учебного комитета ИТУ, 1901 г.", "latitude": 30, "longitude":230, "radius": 10, "panelHeight": 6, "ratio":1.58}
+            ]
+    },
+    {
+        "id":2,
+        "url":"/museum/webvr/images/ex360/point2.jpg",
+        "rotation": 180,
+        "transitions":[
+            {"transitionId": 1, "additionalRotation": 0, "latitude":0, "longitude":110, "radius": 18 },
+            {"transitionId": 3, "additionalRotation": 0, "latitude":0, "longitude":330, "radius": 18 }
+            ],
+        "model":[
+            ],
+        "info":[
+            {"id":"inf-2", "title":"Положение о ремесленном учебном заведении", "text": "„Сделать.... полезными членами общества не токмо приготовлением хороших практических ремесленников, но и образованием искусных мастеров с теоретическими сведениями, знающих новейшие улучшения по сим частям и способных к распространению оных.\n\n",
+                "latitude": 20, "longitude":200, "radius": 10, "panelHeight": 7, "image": "/museum/webvr/images/excursioninfo/point2_info1.jpg", "imageWidth" : 8.4, "imageHeight": 5.96, "ratio":1.41},
+            {"id":"inf-3", "title":"Алексей Станиславович Елесеев         ", "text": "Ректор МВТУ (МГТУ) им. Н.Э.Баумана с 1985 по 1991 г.\nОкончил МВТУ в 1957 г.\nПрофессор, доктор технических наук, заведующий кафедрой\"'Автоматические информационные устройства\" с 1980 по 1987 г.\nДважды Герой Советского Союза. Трижды совершал космические полеты.\nИнициатор выхода совместного Постановления ЦК КПСС и Совета Министров СССР Ne 452 от 17.04. 1987, в котором предписывалось организовать на базе МВТУ им. Н. Э. Баумана учебное заведение нового типа.\nОсновным структурным подразделением училища стал научно-учебный комплекс (НУК), включающий в себя факультет и научно-исследовательский институт.\nНа филиалах МВТУ при предприятиях организована отраслевая форма обучения.\nЛиквидирован вечерний факультет.\n1987 - создан Межотраслевой институт повышения квалификации специалистов.\n1989 - создана кафедра \"Программное обеспечение ЭВМ и информационные технологии\".\n1989 переименование МВТУ в Московский государственный технический университет им. Н. Э. Баумана.",
+                "latitude": -10, "longitude":250, "radius": 12, "panelHeight": 15, "image": "/museum/webvr/images/excursioninfo/point2_info2.JPG", "imageWidth" : 4.9, "imageHeight": 7, "ratio":0.7}
+            ]
+    },
+    {
+        "id":3,
+        "url":"/museum/webvr/images/ex360/point3.jpg",
+        "rotation": 180,
+        "transitions":[
+            {"transitionId": 2, "additionalRotation": 0, "latitude":0, "longitude":220, "radius": 18 },
+            {"transitionId": 4, "additionalRotation": 0, "latitude":0, "longitude":100, "radius": 18 }
+            ],
+        "model":[
+            ],
+        "info":[
+            {"id":"inf-4", "title":"                УСТАВ ИМПЕРАТОРСКОГО МОСКОВСКОГО УЧИЛИЩА", "text": "        ",
+                "latitude": 10, "longitude":310, "radius": 14, "panelHeight": 10, "panelWidth": 14, "image": "/museum/webvr/images/excursioninfo/point3_info1.jpg", "imageWidth" : 13, "imageHeight": 13, "ratio":1},
+            {"id":"inf-5", "title":"Оргкомитет II-ой Международной выставки воздухоплавания в Москве, 1912 г.                                              ", "text": " \n\n                         Сидят слева на право: Р. Ф. Фульда (банкир), генерал-майор М. И. Мишкевич (Генштао), генерал-лейтенант П. П. Яковлев, профессор Н. Б. Жуковский (ИМТУ), князь В. А. Голицын (председатель выставочного комитета егермейстер Двора), Ю. А. Меллер (владелец завода «Дукс»), полковник С. П. Михеев, инженер Л. А. Розенцвенг.\nСтоят слева на право: Б. М. Бубекин (секретарь оргкомитета, преподаватель ИМТУ). Д. И. Виноградов, Н. Н. Лебедепко, Г. Ф. Марк, A. A. Пегов, Г. И. Аронтрикер.",
+                "latitude": -10, "longitude":15, "radius": 14, "panelHeight": 15, "panelWidth": 12, "image": "/museum/webvr/images/excursioninfo/point3_info2.jpg", "imageWidth" : 12, "imageHeight": 11, "ratio":1.2}
+            ]
+    },
+    {
+        "id":4,
+        "url":"/museum/webvr/images/ex360/point4.jpg",
+        "rotation": 180,
+        "transitions":[
+            {"transitionId": 3, "additionalRotation": 0, "latitude":0, "longitude":210, "radius": 18 },
+            {"transitionId": 5, "additionalRotation": 0, "latitude":0, "longitude":30, "radius": 18 }
+            ],
+        "model":[
+            ],
+        "info":[
+            {"id":"inf-6", "title":"                ", "text": "\"Русская инженерная мысль в лице В.Г. Шухова создала стержневые гиперболоидные башни, завоевав в этой области приоритет: забывать это наследие нам непозволительною\". По системе Шухова по всей России было построено было построено более 130 водо- и нефте- напорных башен, маяки Херсонского порта, опоры ЛЭП, радиобашня в Москве, в 1950-е гг. - леса железобетонных градирен. \"Остов башни состоит из ряда прямых железных уголков, взаимное пересечение которых образует весьма красивую сетчатую поверхность. Конструкция представляетполную новизну: криволинейная поверхность даёт башне хорошую устойчивость, которая чувствуется глазом смотрящего.\" (М. Горький \"Одесские новости\", 1896 г)",
+                "latitude": -10, "longitude":350, "radius": 14, "panelHeight": 15, "panelWidth": 12, "image": "/museum/webvr/images/excursioninfo/point4_info1.jpg", "imageWidth" : 12, "imageHeight": 11, "ratio":1.2}
+            ]
+    },
+    {
+        "id":5,
+        "url":"/museum/webvr/images/ex360/point5.jpg",
+        "rotation": 180,
+        "transitions":[
+            {"transitionId": 4, "additionalRotation": 0, "latitude":0, "longitude":210, "radius": 18 },
+            {"transitionId": 6, "additionalRotation": 0, "latitude":0, "longitude":70, "radius": 18 }
+            ],
+        "model":[
+            ],
+        "info":[
+            {"id":"inf-7", "title":"             А.П.Гавриленко", "text": "\"...прекрасные курсы Александра Павловича по обработке металлов и по котлам, его статьи в \"Бюллетенях\" характеризуют его как автора, стоящего на страже современного машиностроения\" (Н.Е.Жуковский)",
+               "latitude": 3, "longitude":8, "radius": 14, "panelHeight": 10.5, "panelWidth": 12, "image": "/museum/webvr/images/excursioninfo/point5_info2.jpg", "imageWidth" : 12.5, "imageHeight": 10, "ratio":0},
+            {"id":"inf-8", "title":"Химическая лаборатория", "text": "                 ",
+                "latitude": 0, "longitude":300, "radius": 14, "panelHeight": 11, "panelWidth": 14, "image": "/museum/webvr/images/excursioninfo/point5_info1.jpg", "imageWidth" : 13.7, "imageHeight": 10, "ratio": 1.37}
+            ]
+    },
+    {
+        "id":6,
+        "url":"/museum/webvr/images/ex360/point6.jpg",
+        "rotation": 180,
+        "transitions":[
+            {"transitionId": 5, "additionalRotation": 0, "latitude":0, "longitude":300, "radius": 18 },
+            {"transitionId": 7, "additionalRotation": 0, "latitude":0, "longitude":160, "radius": 18 }
+            ],
+        "model":[
+            ],
+        "info":[
+            {"id":"inf-9", "title":"                  ", "text": "1933 - научно-исследовательский комбинат, тепловозная лаборатория, факультет сварочного производства, общетехнический факультет\n1936 - автотракторный факультет\n1930 - Академия химической защиты РККА, московский текстильный институт /текстильное машиностроение/, московский технологический институт пищевой промышленности /технология питательных веществ/, московский химико-технологический институт /технология красящих веществ/, московский институт химического машиностооения /пишевое машиностроение/\n1948 - московский инженерно-физический институт /инженерно-физический факупьтет/",
+                "latitude": 10, "longitude":50, "radius": 10,  "panelHeight": 9}
+            ]
+    },
+    {
+        "id":7,
+        "url":"/museum/webvr/images/ex360/point7.jpg",
+        "rotation": 180,
+        "transitions":[
+            {"transitionId": 6, "additionalRotation": 0, "latitude":0, "longitude":350, "radius": 18 },
+            {"transitionId": 8, "additionalRotation": 0, "latitude":0, "longitude":80, "radius": 18 }
+            ],
+        "model":[
+            ],
+        "info":[
+            {"id":"inf-10", "title":"Приказ по высшему совету народного хозяйства СССЗ г. Москва, №2222", "text": "31 октября с. г. исполняется 25 лет со дня убийства известного революционера-большевика Н.Э. Баумана. Для увековечения памяти тов. Баумана дирекция, партийные и общественные организации высшего механико-машиностроительного училища ходатайствуют о присвоении этому ВТУЗу имени тов. Баумана. А потому президиум ВСНХ СССР постановил: переименовать ВММУ в Московский механико-машиностроительный институт им. Н.Э. Баумана",
+                "latitude": 15, "longitude":35, "radius": 14, "panelHeight": 7}
+            ]
+    },
+    {
+        "id":8,
+        "url":"/museum/webvr/images/ex360/point8.jpg",
+        "rotation": 180,
+        "transitions":[
+            {"transitionId": 7, "additionalRotation": 0, "latitude":0, "longitude":270, "radius": 18 },
+            {"transitionId": 9, "additionalRotation": 0, "latitude":0, "longitude":150, "radius": 18 }
+            ],
+        "model":[
+            ],
+        "info":[
+        	{"id":"inf-11", "title":"                    ", "text": "1930 - московский авиационный институт\n1930 - московский инженерно-строительный институт\n1932 - московский архитектурный институт\n1921 - всесоюзный теплотехнический институт, всесоюзный институт гидравлическоло машиностроения\n1930 - московский энергетический институт\n1921 - всесоюзный экспериментальный электротехничсским институт\n1930 - инженерно-техническая академия связи",
+                "latitude": 10, "longitude":25, "radius": 14, "panelHeight": 5}
+            ]
+    },
+    {
+        "id":9,
+        "url":"/museum/webvr/images/ex360/point9.jpg",
+        "rotation": 180,
+        "transitions":[
+            {"transitionId": 8, "additionalRotation": 0, "latitude":0, "longitude":0, "radius": 18 },
+            {"transitionId": 10, "additionalRotation": 0, "latitude":0, "longitude":210, "radius": 18 }
+            ],
+        "model":[
+            ],
+        "info":[
+        	{"id":"inf-12","title":"Плужников Тимофей Григорьевич", "text": "                       ",
+                "latitude": -15, "longitude":120, "radius": 14, "panelHeight": 10, "panelWidth": 9.5, "image": "/museum/webvr/images/excursioninfo/point9_info1.jpg", "imageWidth" : 9.1, "imageHeight": 10, "ratio":0.91}
+            ]
+    },
+    {
+        "id":10,
+        "url":"/museum/webvr/images/ex360/point10.jpg",
+        "rotation": 180,
+        "transitions":[
+            {"transitionId": 9, "additionalRotation": 0, "latitude":0, "longitude":30, "radius": 18 },
+            {"transitionId": 11, "additionalRotation": 0, "latitude":0, "longitude":210, "radius": 18 }
+            ],
+        "model":[
+            ],
+        "info":[
+        	{"id":"inf-13", "title":"                   ", "text": "                         ",
+                "latitude": 0, "longitude":75, "radius": 14, "panelHeight": 8, "panelWidth": 15, "image": "/museum/webvr/images/excursioninfo/point10_info1.jpg", "imageWidth" : 14.2, "imageHeight": 10, "ratio":1.42}
+            ]
+    },
+    {
+        "id":11,
+        "url":"/museum/webvr/images/ex360/point11.jpg",
+        "rotation": 180,
+        "transitions":[
+            {"transitionId": 10, "additionalRotation": 0, "latitude":0, "longitude":30, "radius": 18 },
+            {"transitionId": 12, "additionalRotation": 0, "latitude":0, "longitude":250, "radius": 18 }
+            ],
+        "model":[
+            ],
+        "info":[
+        	{"id":"inf-14", "title":"СТРЕКАЛОВ Геннадий Михайлович                   ", "text": "                Дважды Герой Советского Союза, к. т. н.\nВыпускник 1965 г. (кафедра \"Космические аппараты и ракеты-носители\").\nСпециалист по эксплуатации пилотируемой космической техники.\nВ отряде космонавтов с 1973 г.\nСовершил 5 космических полётов.\nВ ноябре - декабре 1980 г. - космонавт-исследователь орбитального комплекса \"Салют-6\" - \"Союз-Т-3\".\nВ апреле 1983 г. - бортинженер на космическом корабле \"Союз-Т-8\". Из-за отклонения от предустмотренных режимов сближения стыковка с орбитальным комплексом была отменена.\nВ апреле 1984 г. принял участие в полете советско-индийского экипажа.\nВ августе-декабре 1990 г. - бортинженер орбитального комплекса \"Мир\" - \"Союз-ТМ-10\". Производил ремонтные работы в открытом космосе.\nB марте-июне 1995 г. - на орбитальном комплексе \"Мир\" - \"Союз-ТМ-21\" - \"Атлантис\". Посадку Г.М.Стрекалов совершил на корабле \"Атлантис\".",
+                "latitude": -10, "longitude":120, "radius": 14, "panelHeight": 12, "panelWidth":7, "image": "/museum/webvr/images/excursioninfo/point11_info1.jpg", "imageWidth" : 5.72, "imageHeight": 8.29}
+            ]
+    },
+    {
+        "id":12,
+        "url":"/museum/webvr/images/ex360/point12.jpg",
+        "rotation": 180,
+        "transitions":[
+            {"transitionId": 1, "additionalRotation": 0, "latitude":0, "longitude":300, "radius": 18 },
+            {"transitionId": 11, "additionalRotation": 0, "latitude":0, "longitude":80, "radius": 18 }
+            ],
+        "model":[
+            ],
+        "info":[
+        	{"id":"inf-15", "title":"                 ", "text": "в Совете Главных конструкторов ракетостроения:\nН.А. Пилюгин /1908-1982/, Главный конструктор систем управления ракет носителей /ок. МВТУ в 1935 г./\nC.П. Королев /1907-1966/, основоположник практической космонавтики /ок. МВТУ В 1930 г. преподавал с 1947 ПО 1950 г./\nВ.П. Глушко /1910 - 1989/, Главный конструктор ракетного двигателестроения /преподавал в МВТУ в 1947-50 г. г./\nВ.П. Бармин /1909-1993/, Главный конструктор пусковых установок для ракет /oк. МВТУ в 1930 г, преполавал с 1931 по 1991 г.\nВ.И. Кузнецов /1913-1991/, Главный конструктор гироскопических систем управления /преподавал в МВТУ в 60-е г. г./",
+                "latitude": 20, "longitude":220, "radius": 14, "panelHeight": 12, "panelWidth":10, "image": "/museum/webvr/images/excursioninfo/point12_info1.jpg", "imageWidth" : 9.6, "imageHeight": 6, "ratio": 1.69}
+            ]
+    }
+]
