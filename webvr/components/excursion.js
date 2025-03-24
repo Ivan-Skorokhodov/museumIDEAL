@@ -17,6 +17,32 @@ AFRAME.registerComponent("excursion", {
     let data = this.data;
     let scene = document.querySelector("a-scene");
 
+    let connections = [
+      [0, 1],
+      [1, 2],
+      [2, 3],
+      [3, 4], // thumb
+      [0, 5],
+      [5, 6],
+      [6, 7],
+      [7, 8], // index finger
+      [0, 9],
+      [9, 10],
+      [10, 11],
+      [11, 12], // middle finger
+      [0, 13],
+      [13, 14],
+      [14, 15],
+      [15, 16], // ring finger
+      [0, 17],
+      [17, 18],
+      [18, 19],
+      [19, 20], // pinky
+      [5, 9],
+      [9, 13],
+      [13, 17],
+    ];
+
     let dataCoords = [];
     this.socket = new WebSocket("ws://localhost:8000");
 
@@ -26,7 +52,7 @@ AFRAME.registerComponent("excursion", {
 
     this.socket.onmessage = (event) => {
       dataCoords = JSON.parse(event.data);
-      this.redata(dataCoords, scene);
+      this.renderHand(dataCoords, connections, scene);
       console.log("Received coordinates:", dataCoords);
     };
 
@@ -74,22 +100,6 @@ AFRAME.registerComponent("excursion", {
       this.createAxes();
     };
     x.send(null);
-
-    let count = 0;
-    document.addEventListener("keydown", (event) => {
-      if (event.code === "Digit1") {
-        this.selectedShape = "box";
-        console.log("Selected shape: Box");
-      } else if (event.code === "Digit2") {
-        this.selectedShape = "sphere";
-        console.log("Selected shape: Sphere");
-      }
-
-      if (event.code === "Space") {
-        this.createBox(dataCoords, count);
-        count += 1;
-      }
-    });
   },
 
   changeRoom: function (num, addRot, doURL) {
@@ -334,60 +344,56 @@ AFRAME.registerComponent("excursion", {
     return text;
   },
 
-  createBox: function (position, box_id, scene) {
-    var boxEl = document.createElement("a-box");
-    boxEl.setAttribute("material", { color: "#0ebeff" });
-    boxEl.setAttribute("position", position);
-    boxEl.setAttribute("id", "box_" + box_id);
-
-    var textEl = document.createElement("a-text");
-    textEl.setAttribute("id", "text_box_" + box_id);
-    textEl.setAttribute(
-      "value",
-      `(${position.x.toFixed(2)}, ${position.y.toFixed(
-        2
-      )}, ${position.z.toFixed(2)})`
-    );
-    textEl.setAttribute("color", "#FFFFFF");
-    textEl.setAttribute("position", {
-      x: position.x + 0.5,
-      y: position.y + 0.5,
-      z: position.z,
-    });
-
-    scene.appendChild(boxEl);
-    scene.appendChild(textEl);
-
-    console.log("Created box with ID:", "box_" + box_id);
-  },
-
-  redata: function (data, scene) {
+  renderHand: function (data, connections, scene) {
     if (data !== null) {
       let points = [];
       let position = { x: 0, y: 0, z: 0 };
 
       requestAnimationFrame(() => {
-        for (var i = 0; i < 22; i++) {
+        for (let i = 0; i < 22; i++) {
           if (
             data["x" + i] !== undefined &&
             data["y" + i] !== undefined &&
             data["z" + i] !== undefined
           ) {
-            let x = parseInt(data["x" + i], 10);
-            let y = parseInt(data["y" + i], 10);
-            let z = parseInt(data["z" + i], 10);
+            let x = parseFloat(data["x" + i]);
+            let y = parseFloat(data["y" + i]);
+            let z = parseFloat(data["z" + i]);
 
             position.x = x;
             position.y = y;
             position.z = z;
 
-            points.push({ x, y, z });
+            points[i] = { x, y, z };
 
             let entity = document.getElementById("parent_id" + i);
             if (entity) {
               entity.object3D.position.set(x, y, z);
             } else {
               this.createPoint(i, x, y, z, scene);
+            }
+          }
+        }
+
+        // Создание линий после цикла
+        for (let j = 0; j < connections.length; j++) {
+          let start = connections[j][0];
+          let end = connections[j][1];
+
+          // Проверяем существование обеих точек
+          if (points[start] && points[end]) {
+            let lineId = "line_" + start + "_" + end;
+            let lineEl = document.getElementById(lineId);
+
+            if (lineEl) {
+              lineEl.setAttribute("line", {
+                start: `${points[start].x} ${points[start].y} ${points[start].z}`,
+                end: `${points[end].x} ${points[end].y} ${points[end].z}`,
+                color: "#00FF00",
+                width: 0.2,
+              });
+            } else {
+              this.createLine(lineId, points[start], points[end], scene);
             }
           }
         }
@@ -415,6 +421,28 @@ AFRAME.registerComponent("excursion", {
     entity.appendChild(text);
 
     scene.appendChild(entity);
+  },
+
+  createLine: function (id, start, end, scene) {
+    if (
+      !start ||
+      !end ||
+      typeof start.x === "undefined" ||
+      typeof end.x === "undefined"
+    ) {
+      console.error("Некорректные координаты для линии:", start, end);
+      return;
+    }
+
+    var lineEl = document.createElement("a-entity");
+    lineEl.setAttribute("id", id);
+    lineEl.setAttribute("line", {
+      start: `${start.x} ${start.y} ${start.z}`,
+      end: `${end.x} ${end.y} ${end.z}`,
+      color: "#00FF00",
+      width: 0.2,
+    });
+    scene.appendChild(lineEl);
   },
 
   createAxes: function () {
