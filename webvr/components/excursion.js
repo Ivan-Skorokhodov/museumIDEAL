@@ -16,6 +16,23 @@ AFRAME.registerComponent("excursion", {
   init: function () {
     let data = this.data;
 
+    let dataCoords = [];
+    this.socket = new WebSocket("ws://localhost:8000");
+
+    this.socket.onopen = function () {
+      console.log("WebSocket connection established.");
+    };
+
+    this.socket.onmessage = (event) => {
+      dataCoords = JSON.parse(event.data);
+      console.log("Received coordinates:", dataCoords);
+      this.createBox(data, Date.now());
+    };
+
+    this.socket.onclose = function () {
+      console.log("WebSocket connection closed.");
+    };
+
     this.backStack = [];
     let back = this.createPanel(
       "1",
@@ -58,7 +75,6 @@ AFRAME.registerComponent("excursion", {
     x.send(null);
 
     let count = 0;
-
     document.addEventListener("keydown", (event) => {
       if (event.code === "Digit1") {
         this.selectedShape = "box";
@@ -69,13 +85,8 @@ AFRAME.registerComponent("excursion", {
       }
 
       if (event.code === "Space") {
-        let position = {
-          x: count,
-          y: 1,
-          z: count,
-        };
-        this.createBox(position, Date.now());
-        count += 2;
+        this.createBox(dataCoords, count);
+        count += 1;
       }
     });
   },
