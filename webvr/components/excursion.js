@@ -53,6 +53,25 @@ AFRAME.registerComponent("excursion", {
       }
     };
     x.send(null);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.code === "Digit1") {
+        this.selectedShape = "box";
+        console.log("Selected shape: Box");
+      } else if (event.code === "Digit2") {
+        this.selectedShape = "sphere";
+        console.log("Selected shape: Sphere");
+      }
+
+      if (event.code === "Space") {
+        let position = {
+          x: Math.random() * 4 - 2,
+          y: 1,
+          z: Math.random() * 4 - 2,
+        };
+        this.createBox(position, Date.now());
+      }
+    });
   },
 
   changeRoom: function (num, addRot, doURL) {
@@ -295,5 +314,33 @@ AFRAME.registerComponent("excursion", {
     });
     point.appendChild(text);
     return text;
+  },
+
+  createBox: function (position, box_id) {
+    var boxEl = document.createElement("a-box");
+    boxEl.setAttribute("material", { color: "#0ebeff" });
+    boxEl.setAttribute("position", position);
+    boxEl.setAttribute("id", "box_" + box_id);
+
+    var textEl = document.createElement("a-text");
+    textEl.setAttribute("id", "text_box_" + box_id);
+    textEl.setAttribute(
+      "value",
+      `(${position.x.toFixed(2)}, ${position.y.toFixed(
+        2
+      )}, ${position.z.toFixed(2)})`
+    );
+    textEl.setAttribute("color", "#FFFFFF");
+    textEl.setAttribute("position", {
+      x: position.x + 0.5,
+      y: position.y + 0.5,
+      z: position.z,
+    });
+
+    var scene = document.querySelector("a-scene");
+    scene.appendChild(boxEl);
+    scene.appendChild(textEl);
+
+    console.log("Created box with ID:", "box_" + box_id);
   },
 });
