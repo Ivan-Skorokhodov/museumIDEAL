@@ -15,6 +15,7 @@ AFRAME.registerComponent("excursion", {
 
   init: function () {
     let data = this.data;
+    let scene = document.querySelector("a-scene");
 
     let dataCoords = [];
     this.socket = new WebSocket("ws://localhost:8000");
@@ -25,8 +26,8 @@ AFRAME.registerComponent("excursion", {
 
     this.socket.onmessage = (event) => {
       dataCoords = JSON.parse(event.data);
+      this.redata(dataCoords, scene);
       console.log("Received coordinates:", dataCoords);
-      this.createBox(data, Date.now());
     };
 
     this.socket.onclose = function () {
@@ -333,7 +334,7 @@ AFRAME.registerComponent("excursion", {
     return text;
   },
 
-  createBox: function (position, box_id) {
+  createBox: function (position, box_id, scene) {
     var boxEl = document.createElement("a-box");
     boxEl.setAttribute("material", { color: "#0ebeff" });
     boxEl.setAttribute("position", position);
@@ -354,11 +355,66 @@ AFRAME.registerComponent("excursion", {
       z: position.z,
     });
 
-    var scene = document.querySelector("a-scene");
     scene.appendChild(boxEl);
     scene.appendChild(textEl);
 
     console.log("Created box with ID:", "box_" + box_id);
+  },
+
+  redata: function (data, scene) {
+    if (data !== null) {
+      let points = [];
+      let position = { x: 0, y: 0, z: 0 };
+
+      requestAnimationFrame(() => {
+        for (var i = 0; i < 22; i++) {
+          if (
+            data["x" + i] !== undefined &&
+            data["y" + i] !== undefined &&
+            data["z" + i] !== undefined
+          ) {
+            let x = parseInt(data["x" + i], 10);
+            let y = parseInt(data["y" + i], 10);
+            let z = parseInt(data["z" + i], 10);
+
+            position.x = x;
+            position.y = y;
+            position.z = z;
+
+            points.push({ x, y, z });
+
+            let entity = document.getElementById("parent_id" + i);
+            if (entity) {
+              entity.object3D.position.set(x, y, z);
+            } else {
+              this.createPoint(i, x, y, z, scene);
+            }
+          }
+        }
+      });
+    }
+  },
+
+  createPoint: function (i, x, y, z, scene) {
+    var entity = document.createElement("a-entity");
+    entity.setAttribute("id", "parent_id" + i);
+    entity.setAttribute("position", `${x} ${y} ${z}`);
+
+    var sphere = document.createElement("a-sphere");
+    sphere.setAttribute("radius", i < 21 ? "0.1" : "0.2");
+    sphere.setAttribute("color", i < 21 ? "#483D8B" : "#FF0000");
+    sphere.setAttribute("position", "0 0 0");
+
+    var text = document.createElement("a-text");
+    text.setAttribute("id", "text_id" + i);
+    text.setAttribute("value", "");
+    text.setAttribute("color", "#FFFFFF");
+    text.setAttribute("position", "0.125 0 0");
+
+    entity.appendChild(sphere);
+    entity.appendChild(text);
+
+    scene.appendChild(entity);
   },
 
   createAxes: function () {
