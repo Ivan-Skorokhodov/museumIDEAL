@@ -51,8 +51,13 @@ AFRAME.registerComponent("excursion", {
           }
         });
       }
+
+      // Создаем координатные оси при инициализации
+      this.createAxes();
     };
     x.send(null);
+
+    let count = 0;
 
     document.addEventListener("keydown", (event) => {
       if (event.code === "Digit1") {
@@ -65,11 +70,12 @@ AFRAME.registerComponent("excursion", {
 
       if (event.code === "Space") {
         let position = {
-          x: Math.random() * 4 - 2,
+          x: count,
           y: 1,
-          z: Math.random() * 4 - 2,
+          z: count,
         };
         this.createBox(position, Date.now());
+        count += 2;
       }
     });
   },
@@ -342,5 +348,65 @@ AFRAME.registerComponent("excursion", {
     scene.appendChild(textEl);
 
     console.log("Created box with ID:", "box_" + box_id);
+  },
+
+  createAxes: function () {
+    var scene = document.querySelector("a-scene");
+
+    // Ось X (красная)
+    var xAxis = document.createElement("a-entity");
+    xAxis.setAttribute("line", {
+      start: "-40 0 0",
+      end: "40 0 0",
+      color: "red",
+    });
+    scene.appendChild(xAxis);
+
+    // Ось Y (зелёная)
+    var yAxis = document.createElement("a-entity");
+    yAxis.setAttribute("line", {
+      start: "0 -40 0",
+      end: "0 40 0",
+      color: "green",
+    });
+    scene.appendChild(yAxis);
+
+    // Ось Z (синяя)
+    var zAxis = document.createElement("a-entity");
+    zAxis.setAttribute("line", {
+      start: "0 0 -40",
+      end: "0 0 40",
+      color: "blue",
+    });
+    scene.appendChild(zAxis);
+
+    for (let i = -40; i <= 40; i++) {
+      if (i === 0) continue; // Пропустить 0, т.к. уже есть начало оси
+      var textX = document.createElement("a-text");
+      textX.setAttribute("value", i.toString());
+      textX.setAttribute("color", "#FFFFFF");
+      textX.setAttribute("position", { x: i, y: 0.2, z: 0 });
+      scene.appendChild(textX);
+    }
+
+    // Добавляем текстовые метки на оси Y
+    for (let i = -40; i <= 40; i++) {
+      if (i === 0) continue;
+      var textY = document.createElement("a-text");
+      textY.setAttribute("value", i.toString());
+      textY.setAttribute("color", "#FFFFFF");
+      textY.setAttribute("position", { x: 0, y: i, z: 0 });
+      scene.appendChild(textY);
+    }
+
+    // Добавляем текстовые метки на оси Z
+    for (let i = -40; i <= 40; i++) {
+      if (i === 0) continue;
+      var textZ = document.createElement("a-text");
+      textZ.setAttribute("value", i.toString());
+      textZ.setAttribute("color", "#FFFFFF");
+      textZ.setAttribute("position", { x: 0, y: 0, z: i });
+      scene.appendChild(textZ);
+    }
   },
 });
