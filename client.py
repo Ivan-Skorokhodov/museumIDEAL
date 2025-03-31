@@ -136,16 +136,16 @@ async def send_one_position(websocket, path):
                 y_centre_cube = (y_max + y_min) / 2
 
                 data = {
-                    'x21': x_centre_cube / 5,
-                    'y21': y_centre_cube / 5,
-                    'z21': z_palm / 5,
+                    'x21': x_centre_cube / 3,
+                    'y21': y_centre_cube / 3,
+                    'z21': z_palm / 3 - 20,
                     'isClenched': is_clenched  # 0 - open, 1 - close
                 }
 
                 for i in range(21):
-                    data['x' + str(i)] = coords_vr_x[i] / 5
-                    data['y' + str(i)] = coords_vr_y[i] / 5
-                    data['z' + str(i)] = (coords_vr_z[i] + z_palm) / 5
+                    data['x' + str(i)] = coords_vr_x[i] / 3
+                    data['y' + str(i)] = coords_vr_y[i] / 3
+                    data['z' + str(i)] = (coords_vr_z[i] + z_palm) / 3 - 20
 
             try:
                 print("Sent: ", data)

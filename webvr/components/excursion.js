@@ -269,6 +269,13 @@ AFRAME.registerComponent("excursion", {
           imageHeight: elem.info[i].imageHeight ? elem.info[i].imageHeight : 2,
         });
         linkp.appendChild(information);
+
+        let points = document.querySelectorAll(".transition");
+        console.log("Points:", points);
+        points.forEach((point) => {
+          let position = point.getAttribute("position");
+          console.log("Point position:", position);
+        });
       }
     });
   },
@@ -279,6 +286,7 @@ AFRAME.registerComponent("excursion", {
     let x = r * Math.sin(lo) * Math.cos(la);
     let y = r * Math.sin(la);
     let z = -r * Math.cos(la) * Math.cos(lo);
+    //console.log(x + " " + y + " " + z);
     return x + " " + y + " " + z;
   },
 
@@ -372,15 +380,21 @@ AFRAME.registerComponent("excursion", {
             } else {
               this.createPoint(i, x, y, z, scene);
             }
+            if (i === 8) {
+              let pointButtons = document.querySelectorAll(".transition");
+              let pointEntity = document.getElementById("parent_id" + i);
+              for (let j = 0; j < pointButtons.length; j++) {
+                let button = pointButtons[j];
+                this.checkClick(pointEntity, button);
+              }
+            }
           }
         }
 
-        // Создание линий после цикла
         for (let j = 0; j < connections.length; j++) {
           let start = connections[j][0];
           let end = connections[j][1];
 
-          // Проверяем существование обеих точек
           if (points[start] && points[end]) {
             let lineId = "line_" + start + "_" + end;
             let lineEl = document.getElementById(lineId);
@@ -443,6 +457,30 @@ AFRAME.registerComponent("excursion", {
       width: 0.2,
     });
     scene.appendChild(lineEl);
+  },
+
+  checkClick: function (point, button) {
+    if (!point?.object3D || !button?.object3D) {
+      console.warn("object3D не инициализирован", point, button);
+      return;
+    }
+
+    const pointWorldPos = new THREE.Vector3();
+    const buttonWorldPos = new THREE.Vector3();
+
+    button.object3D.getWorldPosition(buttonWorldPos);
+    point.object3D.getWorldPosition(pointWorldPos);
+
+    console.log("Глобальные координаты точки:", pointWorldPos);
+    console.log("Глобальные координаты кнопки:", buttonWorldPos);
+
+    const distance = pointWorldPos.distanceTo(buttonWorldPos);
+    console.log("Расстояние между точкой и кнопкой:", distance);
+
+    if (distance < 3.5) {
+      console.log("Клик сгенерирован!");
+      button.emit("click");
+    }
   },
 
   createAxes: function () {
