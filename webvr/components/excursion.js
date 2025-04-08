@@ -269,13 +269,14 @@ AFRAME.registerComponent("excursion", {
           imageHeight: elem.info[i].imageHeight ? elem.info[i].imageHeight : 2,
         });
         linkp.appendChild(information);
-
+        /*
         let points = document.querySelectorAll(".transition");
         console.log("Points:", points);
         points.forEach((point) => {
           let position = point.getAttribute("position");
           console.log("Point position:", position);
         });
+        */
       }
     });
   },
@@ -355,7 +356,6 @@ AFRAME.registerComponent("excursion", {
   renderHand: function (data, connections, scene) {
     if (data !== null) {
       let points = [];
-      let position = { x: 0, y: 0, z: 0 };
 
       requestAnimationFrame(() => {
         for (let i = 0; i < 22; i++) {
@@ -368,9 +368,25 @@ AFRAME.registerComponent("excursion", {
             let y = parseFloat(data["y" + i]);
             let z = parseFloat(data["z" + i]);
 
-            position.x = x;
-            position.y = y;
-            position.z = z;
+            //поворачиваем точки согласно направлению камеры
+            let camera = document.querySelector("[camera]");
+
+            let cameraEl = camera.object3D;
+            let cameraDirection = new THREE.Vector3();
+            cameraEl.getWorldDirection(cameraDirection);
+
+            let angle = -Math.atan2(cameraDirection.x, cameraDirection.z);
+
+            let cos = Math.cos(angle);
+            let sin = Math.sin(angle);
+
+            let rotatedX = x * cos - z * sin;
+            let rotatedZ = x * sin + z * cos;
+            let rotatedY = y;
+
+            x = rotatedX;
+            y = rotatedY;
+            z = rotatedZ;
 
             points[i] = { x, y, z };
 

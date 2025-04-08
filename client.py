@@ -136,15 +136,14 @@ async def send_one_position(websocket, path):
                     data = {
                         'x21': x_centre_cube / 3 - 15,
                         'y21': y_centre_cube / 3,
-                        'z21': z_palm / 3 - 20,
+                        'z21': z_palm / 3 - 24,
                         'isClenched': is_clenched  # 0 - open, 1 - close
                     }
 
                     for i in range(21):
                         data['x' + str(i)] = coords_vr_x[i] / 3 - 15
                         data['y' + str(i)] = coords_vr_y[i] / 3
-                        data['z' + str(i)] = (coords_vr_z[i] + z_palm) / 3 - 20
-
+                        data['z' + str(i)] = (coords_vr_z[i] + z_palm) / 3 - 24
             try:
                 print("Sent: ", data)
                 await websocket.send(json.dumps(data))
