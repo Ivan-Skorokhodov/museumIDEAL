@@ -61,7 +61,7 @@ async def send_one_position(websocket, path):
                     'isClenched': 0
                 }
 
-            if results.multi_hand_landmarks != None:
+            if results.multi_hand_landmarks is not None:
                 for handLandmarks in results.multi_hand_landmarks:
                     for point in mp_hands.HandLandmark:
                         normalized_landmark = handLandmarks.landmark[point]
@@ -89,63 +89,61 @@ async def send_one_position(websocket, path):
                         print("Successfully calibrated")
                     elif (p_vert < 0.2) or (p_hor < 0.1):
                         print("Closer")
-                        continue
                     elif (p_vert > 0.22) or (p_hor > 0.12):
                         print("Farther")
-                        continue
-
-                if palm_vert >= palm_hor:
-                    z_palm = palm_standard_vert * z_standard / palm_vert
-                    pix = vert_standard_palm / palm_vert
                 else:
-                    z_palm = palm_standard_hor * z_standard / palm_hor
-                    pix = hor_standard_palm / palm_hor
+                    if palm_vert >= palm_hor:
+                        z_palm = palm_standard_vert * z_standard / palm_vert
+                        pix = vert_standard_palm / palm_vert
+                    else:
+                        z_palm = palm_standard_hor * z_standard / palm_hor
+                        pix = hor_standard_palm / palm_hor
 
-                coords_vr_x = []
-                coords_vr_y = []
-                coords_vr_z = []
+                    coords_vr_x = []
+                    coords_vr_y = []
+                    coords_vr_z = []
 
-                for i in range(21):
-                    xi = pix * x[i] * image_width
-                    yi = pix * y[i] * image_height
-                    zi = pix * z[i] * image_width
-                    coords_vr_x.append(xi)
-                    coords_vr_y.append(yi)
-                    coords_vr_z.append(zi)
+                    for i in range(21):
+                        xi = pix * x[i] * image_width
+                        yi = pix * y[i] * image_height
+                        zi = pix * z[i] * image_width
+                        coords_vr_x.append(xi)
+                        coords_vr_y.append(yi)
+                        coords_vr_z.append(zi)
 
-                x_max = max(coords_vr_x)
-                x_min = min(coords_vr_x)
+                    x_max = max(coords_vr_x)
+                    x_min = min(coords_vr_x)
 
-                y_max = max(coords_vr_y)
-                y_min = min(coords_vr_y)
+                    y_max = max(coords_vr_y)
+                    y_min = min(coords_vr_y)
 
-                if is_first_calibration:
-                    y_open_palm_len = y_max - y_min
-                    x_open_palm_len = x_max - x_min
+                    if is_first_calibration:
+                        y_open_palm_len = y_max - y_min
+                        x_open_palm_len = x_max - x_min
 
-                    square_open_palm = y_open_palm_len * x_open_palm_len
-                    square_close_palm = square_open_palm * 0.7
+                        square_open_palm = y_open_palm_len * x_open_palm_len
+                        square_close_palm = square_open_palm * 0.7
 
-                    is_first_calibration = False
+                        is_first_calibration = False
 
-                is_clenched = 0
-                if square_close_palm > (x_max - x_min) * (y_max - y_min):
-                    is_clenched = 1
+                    is_clenched = 0
+                    if square_close_palm > (x_max - x_min) * (y_max - y_min):
+                        is_clenched = 1
 
-                x_centre_cube = (x_max + x_min) / 2
-                y_centre_cube = (y_max + y_min) / 2
+                    x_centre_cube = (x_max + x_min) / 2
+                    y_centre_cube = (y_max + y_min) / 2
 
-                data = {
-                    'x21': x_centre_cube / 3,
-                    'y21': y_centre_cube / 3,
-                    'z21': z_palm / 3 - 20,
-                    'isClenched': is_clenched  # 0 - open, 1 - close
-                }
+                    data = {
+                        'x21': x_centre_cube / 3 - 15,
+                        'y21': y_centre_cube / 3,
+                        'z21': z_palm / 3 - 20,
+                        'isClenched': is_clenched  # 0 - open, 1 - close
+                    }
 
-                for i in range(21):
-                    data['x' + str(i)] = coords_vr_x[i] / 3
-                    data['y' + str(i)] = coords_vr_y[i] / 3
-                    data['z' + str(i)] = (coords_vr_z[i] + z_palm) / 3 - 20
+                    for i in range(21):
+                        data['x' + str(i)] = coords_vr_x[i] / 3 - 15
+                        data['y' + str(i)] = coords_vr_y[i] / 3
+                        data['z' + str(i)] = (coords_vr_z[i] + z_palm) / 3 - 20
 
             try:
                 print("Sent: ", data)
@@ -154,27 +152,6 @@ async def send_one_position(websocket, path):
             except websockets.ConnectionClosed:
                 cap.release()
                 print("Client disconnected")
-
-'''
-async def send_one_position(websocket, path):
-    count = 0
-    while True:
-        coordinates = {
-            "x": count,
-            "y": 1,
-            "z": count
-        }
-        count += 2
-
-        await asyncio.sleep(10)
-
-        try:
-            print("Sent: ", coordinates)
-            await websocket.send(json.dumps(coordinates))
-
-        except websockets.ConnectionClosed:
-            print("Client disconnected")
-'''
 
 
 async def main():
