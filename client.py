@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import cv2
 import json
 import mediapipe as mp

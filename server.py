@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from flask import Flask, send_from_directory, redirect
 import os
 
