@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(MuseumApp());
 
@@ -13,16 +14,8 @@ class MuseumApp extends StatelessWidget {
           child: Column(
             children: [
               ElevatedButton(
-                onPressed: () => _startServer(),
-                child: Text("Start Server"),
-              ),
-              ElevatedButton(
-                onPressed: () => _startClient(),
-                child: Text("Start Client"),
-              ),
-              ElevatedButton(
-                onPressed: () => _openBrowser(),
-                child: Text("Open in Browser"),
+                onPressed: _startApp,
+                child: Text("Start Server and Open App in Browser"),
               ),
             ],
           ),
@@ -31,15 +24,22 @@ class MuseumApp extends StatelessWidget {
     );
   }
 
-  Future<void> _startServer() async {
-    await Process.start('python3', ['assets/server.py']);
-  }
+  Future<void> _startApp() async {
+    try {
+      if (Platform.isWindows) {
+        await Process.start('python', ['assets\\server.py']);
+      } else {
+        await Process.start('python3', ['assets/server.py']);
+      }
 
-  Future<void> _startClient() async {
-    await Process.start('python3', ['assets/client.py']);
-  }
-
-  Future<void> _openBrowser() async {
-    await Process.run('xdg-open', ['http://127.0.0.1:9000']);
+      final url = Uri.parse('http://127.0.0.1:9000');
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print('Error: $e');
+      }
   }
 }
