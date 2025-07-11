@@ -1,0 +1,17 @@
+name: museum_vr
+description: "Flutter wrapper for Python VR Museum"
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/server.py
+    - assets/client.py
+    - assets/index.html
+    - assets/webvr/
+    - assets/fonts/
