@@ -29,8 +29,8 @@ jobs:
       - name: Build Windows app
         run: flutter build windows
 
-      - name: Check build outputs
-        run: Get-ChildItem -Recurse build/windows/runner/Release/
+      - name: Check build windows outputs
+        run: Get-ChildItem -Recurse build/windows/
 
       - name: Upload built app as artifact
         uses: actions/upload-artifact@v4
