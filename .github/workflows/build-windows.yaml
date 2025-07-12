@@ -30,10 +30,10 @@ jobs:
         run: flutter build windows
 
       - name: Check build windows outputs
-        run: Get-ChildItem -Recurse build/windows/
+        run: Get-ChildItem -Recurse build/windows/x64/runner/Release/
 
       - name: Upload built app as artifact
         uses: actions/upload-artifact@v4
         with:
           name: museum_vr_windows_build
-          path: build/windows/runner/Release/
+          path: build/windows/x64/runner/Release/
