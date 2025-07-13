@@ -45,11 +45,20 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
 
   Future<void> _startApp() async {
     try {
-      if (Platform.isWindows) {
-        _serverProcess = await Process.start('python', ['assets\\server.py']);
-      } else {
-        _serverProcess = await Process.start('python3', ['assets/server.py']);
-      }
+      final serverPath = Platform.isWindows
+        ? 'assets\\server.exe'
+        : 'assets/server';
+
+      _serverProcess = await Process.start(serverPath, []);
+
+
+      _serverProcess!.stdout
+          .transform(SystemEncoding().decoder)
+          .listen((data) => print('STDOUT: $data'));
+
+      _serverProcess!.stderr
+          .transform(SystemEncoding().decoder)
+          .listen((data) => print('STDERR: $data'));
 
       setState(() {
         _isServerRunning = true;
@@ -64,9 +73,10 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
         throw 'Could not launch $url';
       }
     } catch (e) {
-      print('Error: $e');
+      print('Error starting server: $e');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
