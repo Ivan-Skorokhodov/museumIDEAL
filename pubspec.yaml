@@ -11,8 +11,5 @@ dependencies:
 
 flutter:
   assets:
-    - assets/server.py
+    - assets/server
     - assets/client.py
-    - assets/index.html
-    - assets/webvr/
-    - assets/fonts/
