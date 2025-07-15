@@ -12,4 +12,4 @@ dependencies:
 flutter:
   assets:
     - assets/server
-    - assets/client.py
+    - assets/client

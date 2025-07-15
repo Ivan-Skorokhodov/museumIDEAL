@@ -11,7 +11,9 @@ class MuseumApp extends StatefulWidget {
 
 class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
   Process? _serverProcess;
+  Process? _clientProcess;
   bool _isServerRunning = false;
+  bool _isClientRunning = false;
 
   @override
   void initState() {
@@ -22,6 +24,7 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
   @override
   void dispose() {
     _killServerProcess();
+    _killClientProcess();
     WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
   }
@@ -30,6 +33,7 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.detached || state == AppLifecycleState.paused) {
       _killServerProcess();
+      _killClientProcess();
     }
   }
 
@@ -40,6 +44,13 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
       setState(() {
         _isServerRunning = false;
       });
+    }
+  }
+
+  Future<void> _killClientProcess() async {
+    if (_clientProcess != null) {
+      _clientProcess!.kill();
+      _clientProcess = null;
     }
   }
 
@@ -77,6 +88,28 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
     }
   }
 
+  Future<void> _startClientProcess() async {
+    try {
+      final clientPath = Platform.isWindows
+        ? 'assets\\client.exe'
+        : 'assets/client';
+
+      _clientProcess = await Process.start(clientPath, []);
+
+
+      _clientProcess!.stdout
+          .transform(SystemEncoding().decoder)
+          .listen((data) => print('CLIENT STDOUT: $data'));
+
+      _clientProcess!.stderr
+          .transform(SystemEncoding().decoder)
+          .listen((data) => print('CLIENT STDERR: $data'));
+
+    } catch (e) {
+      print('Error starting client: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +120,11 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              ElevatedButton(
+                onPressed: _isServerRunning ? null : _startClientProcess,
+                child: Text("Start Client (detecting hand)"),
+              ),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _isServerRunning ? null : _startApp,
                 child: Text("Start Server and Open App in Browser"),
