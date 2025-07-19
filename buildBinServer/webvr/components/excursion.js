@@ -6,6 +6,8 @@ AFRAME.registerComponent("excursion", {
     modelOpenButton: { type: "string" },
     infoOpen: { type: "string", default: "" },
     infoClose: { type: "string", default: "" },
+    rightArrow: { type: "string", default: "" },
+	leftArrow: { type: "string", default: "" },
     backb: { type: "string", default: "" },
     button: { type: "selector" },
     font: { type: "string" },
@@ -269,6 +271,29 @@ AFRAME.registerComponent("excursion", {
           imageHeight: elem.info[i].imageHeight ? elem.info[i].imageHeight : 2,
         });
         linkp.appendChild(information);
+
+		for (let i = 0; i < elem.pano.length; i++) {
+			let panorama = document.createElement("a-entity");
+			panorama.classList.add("pano");
+			panorama.setAttribute(
+				"position",
+				this.getSphereCoordinate(
+					    elem.pano[i].latitude,
+						elem.pano[i].longitude,
+						elem.pano[i].radius
+				));
+			panorama.setAttribute("mini-panorama", {
+				openIconImage: this.data.infoOpen,
+				closeIconImage: this.data.infoClose,
+				rightIconImage: this.data.rightArrow,
+				leftIconImage: this.data.leftArrow,
+				addAttribute: "camera-look",
+				images: elem.pano[i].images ? elem.pano[i].images : [],
+			});
+			linkp.appendChild(panorama);
+		}
+
+
         /*
         let points = document.querySelectorAll(".transition");
         console.log("Points:", points);
