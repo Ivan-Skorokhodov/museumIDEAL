@@ -15,6 +15,13 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
   bool _isServerRunning = false;
   bool _isClientRunning = false;
 
+  String _getExecutablePath(String relativePath) {
+  final executableDir = File(Platform.resolvedExecutable).parent.path;
+  return Platform.isWindows
+      ? '$executableDir\\$relativePath'
+      : '$executableDir/$relativePath';
+}
+
   @override
   void initState() {
     super.initState();
@@ -56,9 +63,7 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
 
   Future<void> _startApp() async {
     try {
-      final serverPath = Platform.isWindows
-        ? 'assets\\server.exe'
-        : 'assets/server';
+      final serverPath = _getExecutablePath('assets/server');
 
       _serverProcess = await Process.start(serverPath, []);
 
@@ -90,9 +95,7 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
 
   Future<void> _startClientProcess() async {
     try {
-      final clientPath = Platform.isWindows
-        ? 'assets\\client.exe'
-        : 'assets/client';
+      final clientPath = _getExecutablePath('assets/client');
 
       _clientProcess = await Process.start(clientPath, []);
 
