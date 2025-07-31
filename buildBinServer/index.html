@@ -7,18 +7,73 @@
     <script src="/museum/webvr/components/excursion.js"></script>
     <script src="/museum/webvr/components/camera-look.js"></script>
     <script src="/museum/webvr/components/aframe-dialog-popup-component.js"></script>
+    <script src="/museum/webvr/components/mini-panorama.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.loaders.min.js"></script>
+
+    <script>
+      AFRAME.registerComponent("recolor", {
+        schema: {
+          default: "#fca",
+        },
+        init: function () {
+          this.el.addEventListener("model-loaded", () => {
+            const mesh = this.el.getObject3D("mesh");
+            if (!mesh) return;
+            mesh.traverse((node) => {
+              if (node.isMesh && node.material) {
+                node.material.map = null;
+
+                node.material.color.set(this.data);
+                node.material.metalness = 0; // Без металлического блеска
+                node.material.roughness = 1; // Полностью матовая поверхность
+                node.material.transparent = false; // Без прозрачности
+                node.material.opacity = 1.0;
+                node.material.needsUpdate = true;
+              }
+            });
+          });
+        },
+      });
+    </script>
+
     <script
       type="text/javascript"
       src="/museum/webvr/data/exdata.json"
     ></script>
   </head>
 
-  <body style="background-color: #000">
+  <body style="background-color: rgb(255, 255, 255)">
     <a-scene>
       <a-assets>
         <a-asset-item
           id="modelex"
           src="/museum/webvr/images/models/DNA.gltf"
+        ></a-asset-item>
+
+        <a-asset-item
+          id="handModelGLB"
+          src="/museum/webvr/images/models/2.glb"
+        ></a-asset-item>
+
+        <a-asset-item
+          id="palm"
+          src="/museum/webvr/images/models/wrist.obj"
+        ></a-asset-item>
+
+        <a-asset-item
+          id="indexTop"
+          src="/museum/webvr/images/models/indexTop.obj"
+        ></a-asset-item>
+
+        <a-asset-item
+          id="indexMiddle"
+          src="/museum/webvr/images/models/indexMiddle.obj"
+        ></a-asset-item>
+
+        <a-asset-item
+          id="indexDown"
+          src="/museum/webvr/images/models/indexDown.obj"
         ></a-asset-item>
 
         <img
@@ -32,6 +87,20 @@
         <img id="info" src="/museum/webvr/images/excursionstuff/info.jpg" />
         <img id="transb" src="/museum/webvr/images/excursionstuff/empt.jpg" />
         <img id="backb" src="/museum/webvr/images/excursionstuff/back6.png" />
+        <img id="pano" src="/museum/webvr/images/excursionstuff/mini-pan.png" />
+        <img
+          id="rightArrow"
+          src="/museum/webvr/images/excursionstuff/arrow.png"
+        />
+        <img
+          id="leftArrow"
+          src="/museum/webvr/images/excursionstuff/leftArrow.png"
+        />
+        <img id="map" src="/museum/webvr/images/excursionstuff/map.png" />
+        <img
+          id="mapButton"
+          src="/museum/webvr/images/excursionstuff/mapButton_white.png"
+        />
       </a-assets>
 
       <a-entity camera look-controls>
@@ -66,7 +135,128 @@
       </a-entity>
 
       <a-entity
-        excursion="target:#esphere;  edata:exdata; empty : #transb; infoOpen : #info; infoClose : #infoClose; modelOpenButton: #modelOpenButton; font: fonts/YaHeiCustom-msdf.json; linkp:#linkParent; backb:#backb; button:#button"
+        id="palm-model"
+        obj-model="obj: #palm"
+        material="color: #fca"
+        scale="1 1 1"
+        visible="false"
+      ></a-entity>
+
+      <a-entity
+        id="finger197-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+      ></a-entity>
+
+      <a-entity
+        id="finger19-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger20-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger18-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger16-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger15-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger14-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger12-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger11-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger10-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger8-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger7-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger6-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger4-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger3-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+      <a-entity
+        id="finger2-model"
+        gltf-model="#handModelGLB"
+        scale="1 1 1"
+        visible="false"
+        recolor="#fca"
+      ></a-entity>
+
+      <a-entity
+        excursion="target:#esphere;  edata:exdata; empty : #transb; infoOpen : #info; panoOpen : #pano; mapOpen : #mapButton; map: #map; infoClose : #infoClose; rightArrow : #rightArrow; leftArrow : #leftArrow; mapNavigation : #map ; modelOpenButton: #modelOpenButton; font: fonts/YaHeiCustom-msdf.json; linkp:#linkParent; backb:#backb; button:#button"
       >
         <a-entity camera look-controls>
           <a-entity
@@ -75,6 +265,16 @@
             rotation="30 0 0"
           ></a-entity>
         </a-entity>
+
+        <a-camera>
+          <!--a-plane
+            id="map-test"
+            src="#map"
+            material="transparent: true; alphaTest: 0.01;"
+            position="3 0.5 -3"
+          ></a-plane-->
+        </a-camera>
+
         <a-sky
           setup-fade="target:#esphere"
           color="#9990"

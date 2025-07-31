@@ -11,7 +11,16 @@ class MuseumApp extends StatefulWidget {
 
 class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
   Process? _serverProcess;
+  Process? _clientProcess;
   bool _isServerRunning = false;
+  bool _isClientRunning = false;
+
+  String _getExecutablePath(String relativePath) {
+  final executableDir = File(Platform.resolvedExecutable).parent.path;
+  return Platform.isWindows
+      ? '$executableDir\\$relativePath'
+      : '$executableDir/$relativePath';
+}
 
   @override
   void initState() {
@@ -22,6 +31,7 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
   @override
   void dispose() {
     _killServerProcess();
+    _killClientProcess();
     WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
   }
@@ -30,6 +40,7 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.detached || state == AppLifecycleState.paused) {
       _killServerProcess();
+      _killClientProcess();
     }
   }
 
@@ -43,11 +54,19 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
     }
   }
 
+  Future<void> _killClientProcess() async {
+    if (_clientProcess != null) {
+      _clientProcess!.kill();
+      _clientProcess = null;
+      setState(() {
+        _isClientRunning = false;
+      });
+    }
+  }
+
   Future<void> _startApp() async {
     try {
-      final serverPath = Platform.isWindows
-        ? 'assets\\server.exe'
-        : 'assets/server';
+      final serverPath = _getExecutablePath('assets/server');
 
       _serverProcess = await Process.start(serverPath, []);
 
@@ -77,6 +96,30 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
     }
   }
 
+  Future<void> _startClientProcess() async {
+    try {
+      final clientPath = _getExecutablePath('assets/client');
+
+      _clientProcess = await Process.start(clientPath, []);
+
+
+      _clientProcess!.stdout
+          .transform(SystemEncoding().decoder)
+          .listen((data) => print('CLIENT STDOUT: $data'));
+
+      _clientProcess!.stderr
+          .transform(SystemEncoding().decoder)
+          .listen((data) => print('CLIENT STDERR: $data'));
+
+      setState(() {
+        _isClientRunning = true;
+      });
+
+    } catch (e) {
+      print('Error starting client: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +130,20 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              ElevatedButton(
+                onPressed: _isServerRunning ? null : _startClientProcess,
+                child: Text("Start Client (detecting hand)"),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _isClientRunning ? _killClientProcess : null,
+                child: Text("Stop Client"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                ),
+              ),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _isServerRunning ? null : _startApp,
                 child: Text("Start Server and Open App in Browser"),
