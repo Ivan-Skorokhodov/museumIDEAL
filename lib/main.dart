@@ -58,6 +58,9 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
     if (_clientProcess != null) {
       _clientProcess!.kill();
       _clientProcess = null;
+      setState(() {
+        _isClientRunning = false;
+      });
     }
   }
 
@@ -108,6 +111,10 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
           .transform(SystemEncoding().decoder)
           .listen((data) => print('CLIENT STDERR: $data'));
 
+      setState(() {
+        _isClientRunning = true;
+      });
+
     } catch (e) {
       print('Error starting client: $e');
     }
@@ -126,6 +133,15 @@ class _MuseumAppState extends State<MuseumApp> with WidgetsBindingObserver {
               ElevatedButton(
                 onPressed: _isServerRunning ? null : _startClientProcess,
                 child: Text("Start Client (detecting hand)"),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _isClientRunning ? _killClientProcess : null,
+                child: Text("Stop Client"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                ),
               ),
               SizedBox(height: 20),
               ElevatedButton(
